@@ -3,6 +3,7 @@ import { useWizardReducer } from './components/useWizardReducer'
 import { WizardStep } from './types/wizard'
 import { canNavigateToStep } from './engine/validation'
 import { ErrorBoundary } from './components/ErrorBoundary'
+import { StepReference } from './components/StepReference'
 
 export default function App() {
   const [state, dispatch] = useWizardReducer()
@@ -19,7 +20,7 @@ export default function App() {
   const renderStep = () => {
     switch (state.currentStep) {
       case WizardStep.Reference:
-        return <StepPlaceholder name="Reference" description="Upload an architectural reference image" />
+        return <StepReference state={state} dispatch={dispatch} />
       case WizardStep.Override:
         return <StepPlaceholder name="Override" description="Select camera angle, shot scale, lens, aspect ratio" />
       case WizardStep.Output:
