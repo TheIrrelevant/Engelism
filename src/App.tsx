@@ -4,9 +4,12 @@ import { WizardStep } from './types/wizard'
 import { canNavigateToStep } from './engine/validation'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { StepReference } from './components/StepReference'
+import { StepOverride } from './components/StepOverride'
+import { useLibrary } from './data/useLibrary'
 
 export default function App() {
   const [state, dispatch] = useWizardReducer()
+  const lib = useLibrary()
 
   const handleStepClick = (step: WizardStep) => {
     if (canNavigateToStep(state, step)) {
@@ -22,7 +25,7 @@ export default function App() {
       case WizardStep.Reference:
         return <StepReference state={state} dispatch={dispatch} />
       case WizardStep.Override:
-        return <StepPlaceholder name="Override" description="Select camera angle, shot scale, lens, aspect ratio" />
+        return <StepOverride state={state} dispatch={dispatch} lib={lib} />
       case WizardStep.Output:
         return <StepPlaceholder name="Output" description="Review and generate JSON protocol" />
     }
