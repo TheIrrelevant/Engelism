@@ -1,0 +1,191 @@
+{
+  "metadata": {
+    "tool": "Camera Override",
+    "version": "1.0",
+    "description": "Multi-angle architectural visualization library"
+  },
+  
+  "camera_angles": {
+    "eye_level": {
+      "ui_label": "Eye Level",
+      "ui_description": "Standard human perspective",
+      "prompt_text": "Eye-level perspective at standard human height (5-6ft), centered composition maintaining natural sightline. The camera is positioned at a neutral standing observer's viewpoint, creating an intimate and realistic connection with the architectural subject."
+    },
+    "shoulder_level": {
+      "ui_label": "Shoulder Level",
+      "ui_description": "Slightly lower perspective",
+      "prompt_text": "Shoulder-level perspective positioned at approximately 4.5-5ft height, creating a subtle downward viewing angle. This height provides a more intimate and approachable feel compared to eye-level, emphasizing horizontal elements while maintaining realistic human scale."
+    },
+    "waist_level": {
+      "ui_label": "Waist Level",
+      "ui_description": "Mid-height perspective",
+      "prompt_text": "Waist-level perspective at approximately 3-3.5ft height, creating a pronounced upward viewing angle. This position emphasizes vertical elements and building height, making structures appear more imposing and monumental while maintaining ground-level detail visibility."
+    },
+    "knee_level": {
+      "ui_label": "Knee Level",
+      "ui_description": "Low perspective",
+      "prompt_text": "Knee-level perspective positioned at approximately 1.5-2ft height, creating a dramatic upward view. This low vantage point emphasizes vertical scale, makes buildings appear towering and dominant, and reveals underside details of architectural elements while compressing ground plane elements."
+    },
+    "ground_level": {
+      "ui_label": "Ground Level",
+      "ui_description": "Surface-level view",
+      "prompt_text": "Ground-level perspective positioned at surface height (0-6 inches), creating an extreme upward view. This ultra-low angle makes even modest structures appear monumental, emphasizes material textures at ground level, and creates dramatic converging vertical lines toward the sky."
+    },
+    "worms_eye": {
+      "ui_label": "Worm's Eye",
+      "ui_description": "Extreme low angle looking up",
+      "prompt_text": "Worm's eye perspective from below ground level, creating an extreme upward diagonal view. The camera looks directly upward at a steep angle, making structures appear to radiate from a central vanishing point above. This creates maximum vertical drama and emphasizes underside architectural details."
+    },
+    "low_angle": {
+      "ui_label": "Low Angle",
+      "ui_description": "Below eye level, looking up",
+      "prompt_text": "Low angle perspective positioned below eye level (2-4ft height), tilted upward at 15-30 degrees. This creates a heroic, imposing view of the architecture, emphasizes vertical elements and height, while maintaining enough ground context to show the building's base and immediate surroundings."
+    },
+    "high_angle": {
+      "ui_label": "High Angle",
+      "ui_description": "Above eye level, looking down",
+      "prompt_text": "High angle perspective positioned above standard eye level (7-10ft height), tilted downward at 15-30 degrees. This elevated view reveals more of the ground plane, roof details, and spatial relationships while maintaining human-scale reference. Creates a slightly detached, observational quality."
+    },
+    "birds_eye": {
+      "ui_label": "Bird's Eye",
+      "ui_description": "Steep overhead view",
+      "prompt_text": "Bird's eye perspective from significant elevation (50-200ft), looking downward at 45-60 degree angle. This steep overhead view compresses vertical elements, emphasizes roof planes and site layout, reveals spatial organization clearly, and creates strong diagonal compositions."
+    },
+    "aerial_drone": {
+      "ui_label": "Aerial Drone",
+      "ui_description": "High-altitude overhead",
+      "prompt_text": "Aerial drone perspective positioned vertically above the scene at significant altitude (200-500ft), looking straight down (90 degrees). The camera captures the entire architectural footprint from overhead, emphasizing geometric layout, spatial relationships, roof design, and the building's interaction with surrounding context as a flat architectural plan."
+    },
+    "satellite_view": {
+      "ui_label": "Satellite View",
+      "ui_description": "Extreme altitude view",
+      "prompt_text": "Satellite view perspective from extreme altitude (1000+ ft), looking directly downward at 90 degrees. This ultra-high overhead view shows the building within broader urban or landscape context, emphasizes pattern and urban fabric, and renders the architecture as geometric elements within a larger compositional field."
+    },
+    "dutch_angle": {
+      "ui_label": "Dutch Angle",
+      "ui_description": "Tilted camera perspective",
+      "prompt_text": "Dutch angle (oblique) perspective with the camera rotated 15-45 degrees on its axis, creating diagonal horizon lines and slanted vertical elements. This tilted composition creates dynamic tension, visual unease, and emphasizes diagonal lines. Typically shot at eye level height but can be combined with other angles."
+    }
+  },
+  
+  "shot_scales": {
+    "extreme_close_up": {
+      "ui_label": "Extreme Close-Up",
+      "ui_description": "Eye/Mouth - Isolated detail",
+      "prompt_text": "Extreme Close-Up framing, isolating specific architectural details such as material joints, surface textures, ornamental elements, or hardware. The frame is tightly cropped to 1-2 square feet of area, eliminating all surrounding context to emphasize intricate surface qualities, craftsmanship details, and material character."
+    },
+    "close_up": {
+      "ui_label": "Close-Up",
+      "ui_description": "Head/Shoulder - Key feature focus",
+      "prompt_text": "Close-Up framing focusing on specific architectural features such as window details, entrance elements, column capitals, or facade patterns. The frame encompasses approximately 4-8 square feet, showing complete individual elements with minimal surrounding context, emphasizing design details and material qualities."
+    },
+    "medium_close_up": {
+      "ui_label": "Medium Close-Up",
+      "ui_description": "Sternum - Upper portion detail",
+      "prompt_text": "Medium Close-Up framing showing the upper portion of architectural elements such as building facades, structural systems, or landscape features. The frame encompasses 10-20 square feet, balancing detail visibility with some contextual information about how elements relate to adjacent components."
+    },
+    "medium_shot": {
+      "ui_label": "Medium Shot",
+      "ui_description": "Waist - Balanced view",
+      "prompt_text": "Medium Shot framing providing balanced view of architectural elements, showing complete building components or significant facade sections. The frame encompasses 25-50 square feet, offering clear view of both detail and context, ideal for showing how architectural elements work together as systems."
+    },
+    "medium_full_shot": {
+      "ui_label": "Medium Full Shot",
+      "ui_description": "Body - Near complete view",
+      "prompt_text": "Medium Full Shot framing showing nearly complete architectural elements such as full building elevations, major facade systems, or significant landscape areas. The frame encompasses 60-100 square feet, providing comprehensive view while maintaining detail legibility, ideal for overall building character documentation."
+    },
+    "full_shot": {
+      "ui_label": "Full Shot",
+      "ui_description": "Full Body - Complete structure",
+      "prompt_text": "Full Shot framing capturing the complete primary architectural subject within the frame. For buildings, this shows the entire structure from foundation to roof with minimal surrounding context. The composition emphasizes the building's complete form, proportions, and overall design while maintaining clear detail visibility."
+    },
+    "long_shot": {
+      "ui_label": "Long Shot",
+      "ui_description": "Environmental context included",
+      "prompt_text": "Long Shot framing showing the complete building within its immediate environmental context. The frame includes surrounding landscape, adjacent structures, streets, or plazas. This scale emphasizes how the architecture relates to its site, revealing approach sequences, site planning, and contextual relationships."
+    },
+    "extreme_long_shot": {
+      "ui_label": "Extreme Long Shot",
+      "ui_description": "Distant, landscape view",
+      "prompt_text": "Extreme Long Shot framing showing the building within its broader urban or landscape context from significant distance. The architecture appears as part of a larger compositional field including skyline, terrain, or urban fabric. This scale emphasizes place-making, urban impact, and architectural presence within the wider environment."
+    }
+  },
+  
+  "lenses": {
+    "8mm_fisheye": {
+      "ui_label": "8mm Fisheye",
+      "ui_description": "Extreme wide, distorted",
+      "prompt_text": "8mm fisheye lens creating extreme 180-degree field of view with pronounced spherical barrel distortion. Straight lines curve dramatically toward frame edges, vertical elements bow outward, and space appears expanded. Use for dramatic interior volumes or immersive environmental context, accepting significant geometric distortion as artistic effect."
+    },
+    "14mm_ultra": {
+      "ui_label": "14mm Ultra Wide",
+      "ui_description": "Very wide, minimal distortion",
+      "prompt_text": "14mm ultra-wide rectilinear lens providing expansive 114-degree field of view with corrected perspective (minimal barrel distortion). Maintains straight lines while exaggerating spatial depth and scale. Ideal for capturing complete building facades, tight urban spaces, or dramatic interior volumes while preserving architectural geometry."
+    },
+    "24mm_wide": {
+      "ui_label": "24mm Wide",
+      "ui_description": "Wide documentary style",
+      "prompt_text": "24mm wide-angle lens offering 84-degree field of view, the standard for architectural documentation. Provides expansive view while maintaining natural perspective relationships. Excellent for showing complete rooms, building elevations with context, or landscape sequences. Minimal distortion makes it versatile for most architectural photography needs."
+    },
+    "35mm_classic": {
+      "ui_label": "35mm Classic",
+      "ui_description": "Natural human perspective",
+      "prompt_text": "35mm standard lens providing 63-degree field of view approximating natural human vision. Creates balanced perspective without wide-angle exaggeration or telephoto compression. Ideal for environmental portraits of buildings, contextual views, and documentary sequences that feel natural and approachable to viewers."
+    },
+    "50mm_natural": {
+      "ui_label": "50mm Natural",
+      "ui_description": "True perspective, minimal distortion",
+      "prompt_text": "50mm standard lens offering 47-degree field of view with true perspective rendering and zero distortion. Provides realistic spatial relationships matching human perception. Excellent for detail studies, formal elevations, and situations requiring accurate geometric representation without perspective manipulation."
+    },
+    "85mm_portrait": {
+      "ui_label": "85mm Portrait",
+      "ui_description": "Compressed, flattering perspective",
+      "prompt_text": "85mm short telephoto lens with 29-degree field of view creating subtle perspective compression. Flattens spatial depth slightly, emphasizing facade patterns and surface qualities. Ideal for detail studies, elevation documentation from distance, and compositions emphasizing two-dimensional graphic qualities of architecture."
+    },
+    "200mm_tele": {
+      "ui_label": "200mm Telephoto",
+      "ui_description": "Strong compression, distant subjects",
+      "prompt_text": "200mm telephoto lens with 12-degree narrow field of view creating strong perspective compression. Dramatically flattens spatial depth, stacks architectural elements, and isolates distant details. Excellent for compressed urban skylines, facade pattern studies, or abstracting architecture from significant distance."
+    },
+    "anamorphic": {
+      "ui_label": "Anamorphic",
+      "ui_description": "Cinematic wide format",
+      "prompt_text": "Anamorphic lens creating 2.39:1 ultra-wide cinematic aspect ratio with characteristic optical qualities: horizontal lens flares, oval bokeh, and subtle horizontal compression of image. Provides epic, cinematic feeling with distinctive visual signature. Ideal for dramatic, storytelling architectural imagery with film-like quality."
+    }
+  },
+  
+  "aspect_ratios": {
+    "original": {
+      "ui_label": "Original",
+      "ui_description": "Maintain source ratio"
+    },
+    "1:1": {
+      "ui_label": "1:1 Square",
+      "ui_description": "Instagram, balanced composition"
+    },
+    "4:3": {
+      "ui_label": "4:3 Standard",
+      "ui_description": "Classic photography format"
+    },
+    "16:9": {
+      "ui_label": "16:9 Widescreen",
+      "ui_description": "HDTV, cinematic landscape"
+    },
+    "21:9": {
+      "ui_label": "21:9 Ultrawide",
+      "ui_description": "Cinematic panoramic"
+    },
+    "3:4": {
+      "ui_label": "3:4 Portrait",
+      "ui_description": "Vertical standard"
+    },
+    "4:5": {
+      "ui_label": "4:5 Social",
+      "ui_description": "Instagram portrait"
+    },
+    "9:16": {
+      "ui_label": "9:16 Stories",
+      "ui_description": "Vertical video format"
+    }
+  }
+}
