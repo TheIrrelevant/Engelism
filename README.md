@@ -209,6 +209,19 @@ The prompt engineering enforces 90–95% building fidelity. The AI must identify
 | `npm run fabrication` | Cross-product batch (reads auto-saved config) |
 | `npm run stop-fabrication` | Kill running fabrication |
 
+### Magic Commands (AI IDE Agents)
+
+If you're using an AI-powered IDE (Claude Code, Cursor, Antigravity), you can use these shorthand commands instead of typing the full npm scripts:
+
+| Command | What It Does |
+|---------|-------------|
+| `Engelism!` | Start the dev server and open the browser (`npm run start-engine`) |
+| `Engelismout!` | Stop the dev server (`npm run stop-engine`) |
+| `Fabrication!` | Run cross-product batch processing (`npm run fabrication`) |
+| `StopFabrication!` | Kill the running batch process (`npm run stop-fabrication`) |
+
+These commands are defined in `CLAUDE.md`, `GEMINI.md`, and `.cursorrules`.
+
 ## Environment Variables
 
 | Variable | Required | Description |
