@@ -5,6 +5,7 @@ import { canNavigateToStep } from './engine/validation'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { StepReference } from './components/StepReference'
 import { StepOverride } from './components/StepOverride'
+import { StepOutput } from './components/StepOutput'
 import { useLibrary } from './data/useLibrary'
 
 export default function App() {
@@ -27,7 +28,7 @@ export default function App() {
       case WizardStep.Override:
         return <StepOverride state={state} dispatch={dispatch} lib={lib} />
       case WizardStep.Output:
-        return <StepPlaceholder name="Output" description="Review and generate JSON protocol" />
+        return <StepOutput state={state} dispatch={dispatch} lib={lib} />
     }
   }
 
@@ -40,15 +41,5 @@ export default function App() {
     >
       <ErrorBoundary>{renderStep()}</ErrorBoundary>
     </WizardShell>
-  )
-}
-
-// Temporary placeholder — will be replaced in Steps 04-06
-function StepPlaceholder({ name, description }: { name: string; description: string }) {
-  return (
-    <div className="border border-ash/10 rounded-card p-12 text-center">
-      <h2 className="font-warbler text-2xl text-bone mb-2">{name}</h2>
-      <p className="text-ash/50 text-sm">{description}</p>
-    </div>
   )
 }
