@@ -13,19 +13,26 @@ const KEY_ENV_VARS: Record<ProviderId, string> = {
   [PROVIDER_ID.Anthropic]: 'VITE_ANTHROPIC_API_KEY',
 }
 
+function isRealKey(key: string | undefined): key is string {
+  if (!key) return false
+  const lower = key.toLowerCase()
+  if (lower.includes('your_key') || lower.includes('your-key') || lower === 'xxx') return false
+  return key.length >= 10
+}
+
 function detectProvider(env: Record<string, string>): { providerId: ProviderId; apiKey: string } {
   // 1. Check explicit provider override
   const explicit = env.VITE_PROVIDER as ProviderId | undefined
   if (explicit && PROVIDER_ID[explicit as keyof typeof PROVIDER_ID]) {
     const key = env[KEY_ENV_VARS[explicit]]
-    if (key) return { providerId: explicit, apiKey: key }
+    if (isRealKey(key)) return { providerId: explicit, apiKey: key }
   }
 
-  // 2. Auto-detect: first available key wins
+  // 2. Auto-detect: first available REAL key wins
   const order: ProviderId[] = [PROVIDER_ID.Gemini, PROVIDER_ID.OpenAI, PROVIDER_ID.Anthropic]
   for (const id of order) {
     const key = env[KEY_ENV_VARS[id]]
-    if (key) return { providerId: id, apiKey: key }
+    if (isRealKey(key)) return { providerId: id, apiKey: key }
   }
 
   throw new Error(

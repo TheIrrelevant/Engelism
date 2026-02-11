@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
 import type { WizardState, WizardAction } from '../types/wizard'
 import type { Library } from '../types/library'
+import type { BatchConfig } from '../types/batch-config'
 import { buildPrompt } from '../engine/prompt-builder'
 import { runEngelEngine } from '../engine/run'
+import { fileToBase64 } from '../engine/utils'
 
 interface StepOutputProps {
   state: WizardState
@@ -16,6 +18,8 @@ export function StepOutput({ state, dispatch, lib }: StepOutputProps) {
   const [copied, setCopied] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const timerRef = useRef<ReturnType<typeof setInterval>>(null)
+
+  const hasProtocol = !!state.generatedProtocol
 
   // Loading timer
   useEffect(() => {
@@ -44,11 +48,14 @@ export function StepOutput({ state, dispatch, lib }: StepOutputProps) {
     }
   }
 
-  const handleCopy = async () => {
-    if (!state.generatedProtocol) return
-    await navigator.clipboard.writeText(state.generatedProtocol)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+  const handleCopyOrGenerate = async () => {
+    if (hasProtocol) {
+      await navigator.clipboard.writeText(state.generatedProtocol!)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } else {
+      handleGenerate()
+    }
   }
 
   const handleDownload = () => {
@@ -62,9 +69,35 @@ export function StepOutput({ state, dispatch, lib }: StepOutputProps) {
     URL.revokeObjectURL(url)
   }
 
+  const [configSaved, setConfigSaved] = useState(false)
+
+  const handleSaveConfig = async () => {
+    if (!state.referenceImage) return
+    const imageBase64 = await fileToBase64(state.referenceImage)
+    const config = {
+      lens: state.lens ?? '',
+      aspectRatio: state.aspectRatio ?? '',
+      referenceImage: '',  // filled by server
+    }
+    await fetch('/api/save-config', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ config, imageBase64, imageMimeType: state.referenceImage.type }),
+    })
+    setConfigSaved(true)
+    setTimeout(() => setConfigSaved(false), 2000)
+  }
+
   const handleReset = () => {
     dispatch({ type: "RESET" })
   }
+
+  // Primary button label
+  const primaryLabel = loading
+    ? `Analyzing Architecture... ${elapsed}s`
+    : hasProtocol
+      ? (copied ? 'Copied!' : 'Copy')
+      : 'Start Protocol'
 
   return (
     <div className="h-full flex flex-col">
@@ -106,103 +139,99 @@ export function StepOutput({ state, dispatch, lib }: StepOutputProps) {
         </div>
       )}
 
-      {/* Generate / Loading / Error */}
-      {!state.generatedProtocol && (
-        <div className="mb-6 shrink-0">
-          {error && (
-            <div className="border border-ash/20 rounded-default p-3 mb-4 text-xs text-ash/60">
-              {error}
-            </div>
-          )}
+      {/* Error */}
+      {error && (
+        <div className="border border-ash/20 rounded-default p-3 mb-4 text-xs text-ash/60 shrink-0">
+          {error}
+        </div>
+      )}
 
-          <button
-            onClick={handleGenerate}
-            disabled={loading}
-            className={`
-              w-full py-4 rounded-default text-sm font-bold uppercase tracking-wider
-              transition-all duration-150
-              ${loading
-                ? 'bg-ash/10 text-ash/30 cursor-wait'
+      {/* Loading bar */}
+      {loading && (
+        <div className="mb-4 h-1 bg-ash/10 rounded-full overflow-hidden shrink-0">
+          <div className="h-full bg-ash/40 loading-pulse rounded-full w-full" />
+        </div>
+      )}
+
+      {/* Action buttons — always visible */}
+      <div className="flex gap-3 shrink-0">
+        {/* Start Protocol / Copy */}
+        <button
+          onClick={handleCopyOrGenerate}
+          disabled={loading}
+          className={`
+            flex-1 py-3 rounded-default text-sm font-bold uppercase tracking-wider
+            transition-all duration-150
+            ${loading
+              ? 'bg-ash/10 text-ash/30 cursor-wait'
+              : copied
+                ? 'bg-bone text-obsidian'
                 : 'bg-ash text-obsidian hover:opacity-90'
-              }
-            `}
-          >
-            {loading
-              ? `Analyzing Architecture... ${elapsed}s`
-              : 'Generate Protocol'
             }
-          </button>
+          `}
+        >
+          {primaryLabel}
+        </button>
 
-          {loading && (
-            <div className="mt-2 h-1 bg-ash/10 rounded-full overflow-hidden">
-              <div className="h-full bg-ash/40 loading-pulse rounded-full w-full" />
-            </div>
-          )}
-        </div>
-      )}
+        {/* Download */}
+        <button
+          onClick={handleDownload}
+          disabled={!hasProtocol}
+          className={`
+            flex-1 py-3 rounded-default text-sm font-bold uppercase tracking-wider
+            transition-all duration-150
+            ${hasProtocol
+              ? 'bg-ash text-obsidian hover:opacity-90'
+              : 'bg-ash/10 text-ash/20 cursor-not-allowed'
+            }
+          `}
+        >
+          Download
+        </button>
 
-      {/* Generated Protocol JSON */}
-      {state.generatedProtocol && (
-        <div className="flex-1 min-h-0 flex flex-col">
-          <h3 className="text-ash/60 text-xs font-medium uppercase tracking-wider mb-3 pb-1 border-b border-ash/10 shrink-0">
-            Generated Protocol
-          </h3>
-          <pre className="flex-1 min-h-0 bg-obsidian border border-ash/10 rounded-card p-6 overflow-auto text-xs text-ash/70 leading-relaxed">
-            <code>{state.generatedProtocol}</code>
-          </pre>
+        {/* Regenerate */}
+        <button
+          onClick={handleGenerate}
+          disabled={!hasProtocol || loading}
+          className={`
+            px-6 py-3 rounded-default text-sm font-medium uppercase tracking-wider
+            transition-all duration-150
+            ${hasProtocol && !loading
+              ? 'border border-ash/20 text-ash/60 hover:text-bone hover:border-ash/40'
+              : 'border border-ash/10 text-ash/15 cursor-not-allowed'
+            }
+          `}
+        >
+          Regenerate
+        </button>
 
-          {/* Action buttons */}
-          <div className="flex gap-3 mt-4 shrink-0">
-            <button
-              onClick={handleCopy}
-              className={`
-                flex-1 py-3 rounded-default text-sm font-bold uppercase tracking-wider
-                transition-all duration-150
-                ${copied
-                  ? 'bg-bone text-obsidian'
-                  : 'bg-ash text-obsidian hover:opacity-90'
-                }
-              `}
-            >
-              {copied ? "Copied!" : "Copy JSON"}
-            </button>
+        {/* Save Config */}
+        <button
+          onClick={handleSaveConfig}
+          className={`
+            px-6 py-3 rounded-default text-sm font-medium uppercase tracking-wider
+            transition-all duration-150
+            ${configSaved
+              ? 'bg-bone text-obsidian'
+              : 'border border-ash/20 text-ash/60 hover:text-bone hover:border-ash/40'
+            }
+          `}
+        >
+          {configSaved ? 'Saved!' : 'Save Config'}
+        </button>
 
-            <button
-              onClick={handleDownload}
-              className="
-                flex-1 py-3 rounded-default text-sm font-bold uppercase tracking-wider
-                bg-ash text-obsidian hover:opacity-90
-                transition-all duration-150
-              "
-            >
-              Download JSON
-            </button>
-
-            <button
-              onClick={handleGenerate}
-              disabled={loading}
-              className="
-                px-6 py-3 rounded-default text-sm font-medium uppercase tracking-wider
-                border border-ash/20 text-ash/60 hover:text-bone hover:border-ash/40
-                transition-all duration-150
-              "
-            >
-              Regenerate
-            </button>
-
-            <button
-              onClick={handleReset}
-              className="
-                px-6 py-3 rounded-default text-sm font-medium uppercase tracking-wider
-                border border-ash/20 text-ash/60 hover:text-bone hover:border-ash/40
-                transition-all duration-150
-              "
-            >
-              Reset
-            </button>
-          </div>
-        </div>
-      )}
+        {/* Reset */}
+        <button
+          onClick={handleReset}
+          className="
+            px-6 py-3 rounded-default text-sm font-medium uppercase tracking-wider
+            border border-ash/20 text-ash/60 hover:text-bone hover:border-ash/40
+            transition-all duration-150
+          "
+        >
+          Reset
+        </button>
+      </div>
     </div>
   )
 }

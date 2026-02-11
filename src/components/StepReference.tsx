@@ -17,7 +17,7 @@ export function StepReference({ state, dispatch }: StepReferenceProps) {
   }
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col max-w-3xl mx-auto w-full">
       {/* Header */}
       <div className="mb-6 shrink-0">
         <h2 className="font-warbler text-3xl text-bone mb-2">Reference</h2>
@@ -28,7 +28,7 @@ export function StepReference({ state, dispatch }: StepReferenceProps) {
       </div>
 
       {/* Upload area */}
-      <div className="flex-1 min-h-0 max-w-2xl">
+      <div className="flex-1 min-h-0">
         <ImageUpload
           onUpload={handleUpload}
           preview={state.referencePreview}

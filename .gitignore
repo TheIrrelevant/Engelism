@@ -16,6 +16,11 @@ dist-ssr
 .env
 .env.*
 
+# Fabrication (auto-saved by UI)
+engelism-config.json
+engelism-reference.*
+Protocols/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

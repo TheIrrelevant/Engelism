@@ -4,7 +4,9 @@ export const anthropicProvider: EngelProvider = {
   name: 'Anthropic',
 
   async generate(request: EngelRequest, config: ProviderConfig): Promise<string> {
-    const url = '/api/anthropic/v1/messages'  // Proxied via Vite
+    const isBrowser = 'window' in globalThis
+    const base = isBrowser ? '/api/anthropic' : 'https://api.anthropic.com'
+    const url = `${base}/v1/messages`
 
     const body = {
       model: config.model,

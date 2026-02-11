@@ -4,8 +4,10 @@
 
 | Command | Action |
 |---------|--------|
-| `StartEngine!` | `cd /Users/yamacozkan/Desktop/Kraftreich/Tools/Engelism && npm run dev` |
-| `StopEngine!` | `cd /Users/yamacozkan/Desktop/Kraftreich/Tools/Engelism && npm run stop-engine` |
+| `Engelism!` | `cd /Users/yamacozkan/Desktop/Kraftreich/Tools/Engelism && npm run start-engine` |
+| `Engelismout!` | `cd /Users/yamacozkan/Desktop/Kraftreich/Tools/Engelism && npm run stop-engine` |
+| `Fabrication!` | `cd /Users/yamacozkan/Desktop/Kraftreich/Tools/Engelism && npm run fabrication` |
+| `StopFabrication!` | `cd /Users/yamacozkan/Desktop/Kraftreich/Tools/Engelism && npm run stop-fabrication` |
 
 ## Project Info
 

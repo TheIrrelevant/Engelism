@@ -4,7 +4,9 @@ export const openaiProvider: EngelProvider = {
   name: 'OpenAI',
 
   async generate(request: EngelRequest, config: ProviderConfig): Promise<string> {
-    const url = '/api/openai/v1/chat/completions'  // Proxied via Vite
+    const isBrowser = 'window' in globalThis
+    const base = isBrowser ? '/api/openai' : 'https://api.openai.com'
+    const url = `${base}/v1/chat/completions`
 
     const body = {
       model: config.model,

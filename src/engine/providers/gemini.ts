@@ -10,7 +10,7 @@ function toGeminiSchema(schema: EngelResponseSchema): Record<string, unknown> {
     )
   }
   if (schema.required) result.required = schema.required
-  if (schema.additionalProperties !== undefined) result.additionalProperties = schema.additionalProperties
+  // Gemini does not support additionalProperties — omit it
   if (schema.items) result.items = toGeminiSchema(schema.items)
   if (schema.enum) result.enum = schema.enum
   return result
