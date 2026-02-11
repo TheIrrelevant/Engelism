@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/* ============================================
+   KRAFTREICH — Design Tokens
+   Brand: Obsidian Black + Bone White + Ash Silver
+   ============================================ */
+
+@theme {
+  --color-obsidian: #222121;
+  --color-bone: #F9FEFF;
+  --color-ash: #E2E7E9;
+
+  --font-warbler: 'Warbler', Georgia, serif;
+  --font-avenir: 'Avenir', 'Avenir Next', system-ui, sans-serif;
+
+  --radius-sm: 4px;
+  --radius-default: 8px;
+  --radius-card: 12px;
+
+  --spacing-unit: 8px;
+}
+
+/* ============================================
+   Global Styles
+   ============================================ */
+
+body {
+  background-color: var(--color-obsidian);
+  color: var(--color-bone);
+  font-family: var(--font-avenir);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Warbler Font Face */
+@font-face {
+  font-family: 'Warbler';
+  src: url('/fonts/WarblerVariable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-ash);
+  color: var(--color-obsidian);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-obsidian);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ash);
+  border-radius: 3px;
+}
+
+/* Step transition animation */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-enter {
+  animation: fadeSlideIn 200ms ease-out;
+}
+
+/* Loading pulse for generate button */
+@keyframes pulse-bar {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.loading-pulse {
+  animation: pulse-bar 1.5s ease-in-out infinite;
+}
