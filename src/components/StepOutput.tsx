@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import type { WizardState, WizardAction } from '../types/wizard'
 import type { Library } from '../types/library'
-import type { BatchConfig } from '../types/batch-config'
 import { buildPrompt } from '../engine/prompt-builder'
 import { runEngelEngine } from '../engine/run'
 import { fileToBase64 } from '../engine/utils'
