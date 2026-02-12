@@ -72,19 +72,29 @@ export function StepOutput({ state, dispatch, lib }: StepOutputProps) {
 
   const handleSaveConfig = async () => {
     if (!state.referenceImage) return
-    const imageBase64 = await fileToBase64(state.referenceImage)
-    const config = {
-      lens: state.lens ?? '',
-      aspectRatio: state.aspectRatio ?? '',
-      referenceImage: '',  // filled by server
+    try {
+      const imageBase64 = await fileToBase64(state.referenceImage)
+      const config = {
+        lens: state.lens ?? '',
+        aspectRatio: state.aspectRatio ?? '',
+        referenceImage: '',  // filled by server
+      }
+      const res = await fetch('/api/save-config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ config, imageBase64, imageMimeType: state.referenceImage.type }),
+      })
+
+      if (!res.ok) {
+        const errorText = await res.text()
+        throw new Error(`Save config failed (${res.status}): ${errorText}`)
+      }
+
+      setConfigSaved(true)
+      setTimeout(() => setConfigSaved(false), 2000)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Save config failed')
     }
-    await fetch('/api/save-config', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ config, imageBase64, imageMimeType: state.referenceImage.type }),
-    })
-    setConfigSaved(true)
-    setTimeout(() => setConfigSaved(false), 2000)
   }
 
   const handleReset = () => {
