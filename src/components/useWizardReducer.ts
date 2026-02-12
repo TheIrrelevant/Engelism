@@ -21,6 +21,7 @@ function wizardReducer(state: WizardState, action: WizardAction): WizardState {
 
     // Step 1: Reference
     case "SET_REFERENCE":
+      if (state.referencePreview) URL.revokeObjectURL(state.referencePreview)
       return { ...state, referenceImage: action.file, referencePreview: action.preview }
 
     case "CLEAR_REFERENCE":
