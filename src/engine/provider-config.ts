@@ -22,10 +22,17 @@ function isRealKey(key: string | undefined): key is string {
 
 function detectProvider(env: Record<string, string>): { providerId: ProviderId; apiKey: string } {
   // 1. Check explicit provider override
-  const explicit = env.VITE_PROVIDER as ProviderId | undefined
-  if (explicit && PROVIDER_ID[explicit as keyof typeof PROVIDER_ID]) {
-    const key = env[KEY_ENV_VARS[explicit]]
-    if (isRealKey(key)) return { providerId: explicit, apiKey: key }
+  const explicit = env.VITE_PROVIDER as string | undefined
+  if (explicit) {
+    const providerId = explicit as ProviderId
+    if (!Object.values(PROVIDER_ID).includes(providerId)) {
+      throw new Error(`Invalid VITE_PROVIDER: "${explicit}". Must be one of: ${Object.values(PROVIDER_ID).join(', ')}`)
+    }
+    const key = env[KEY_ENV_VARS[providerId]]
+    if (!isRealKey(key)) {
+      throw new Error(`VITE_PROVIDER set to "${providerId}" but ${KEY_ENV_VARS[providerId]} is missing or invalid`)
+    }
+    return { providerId, apiKey: key }
   }
 
   // 2. Auto-detect: first available REAL key wins
