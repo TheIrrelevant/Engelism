@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import type { ViteDevServer } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { writeFileSync } from 'node:fs'
@@ -8,8 +9,8 @@ import { resolve } from 'node:path'
 function saveConfigPlugin() {
   return {
     name: 'engelism-save-config',
-    configureServer(server: { middlewares: { use: Function } }) {
-      server.middlewares.use('/api/save-config', (req: any, res: any) => {
+    configureServer(server: ViteDevServer) {
+      server.middlewares.use('/api/save-config', (req, res) => {
         if (req.method !== 'POST') { res.statusCode = 405; res.end(); return }
 
         let body = ''
