@@ -51,7 +51,10 @@ export const anthropicProvider: EngelProvider = {
     }
 
     const data = await res.json()
-    const toolBlock = data.content.find((b: { type: string }) => b.type === 'tool_use')
+    const toolBlock = data.content?.find((b: { type: string }) => b.type === 'tool_use')
+    if (!toolBlock?.input) {
+      throw new Error('Anthropic response missing tool_use block with input')
+    }
     return JSON.stringify(toolBlock.input, null, 2)
   },
 }
