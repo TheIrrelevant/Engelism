@@ -19,6 +19,25 @@ compatibility: Requires Node.js 20+. At least one AI provider API key (Google Ge
 
 **AI-powered camera override protocol engine by Kraftreich.**
 
+---
+
+## The Story Behind Engelism
+
+Engelism wasn't born from a feature request. It was born from a frustration.
+
+When working with AI image generation for architectural visualization, every camera angle change would produce a **different building**. The materials would shift. The proportions would warp. The identity would dissolve. There was no way to say "show me this exact building, but from above" and get a consistent result.
+
+Engelism solves this by separating the **what** from the **where**. The reference image locks the building identity. The override protocol describes only the camera change. The AI receives both — and the architecture survives the angle shift.
+
+**What started as a Streamlit prototype** (Engel) became a full React 19 + TypeScript application with provider-agnostic architecture, enforced JSON schemas, cross-product batch processing, and multi-IDE support — all built through prompts, not sprints.
+
+The 6-field protocol structure wasn't designed in a meeting. It emerged from hundreds of failed generations where key information kept getting lost. Each field exists because its absence caused a specific, repeatable failure mode.
+
+> **Engelism** is a Kraftreich tool.
+> Vibe-coded from zero to production — one prompt at a time.
+
+---
+
 Engelism takes an architectural photograph and a set of camera parameters — angle, shot scale, lens, aspect ratio — and generates a structured JSON protocol that describes how to recreate the exact same building from a completely different viewpoint.
 
 ## How It Works
@@ -255,19 +274,3 @@ These commands are defined in `CLAUDE.md`, `GEMINI.md`, and `.cursorrules`.
 | **Multi-Building** | Support for architectural complexes — maintain consistency across multiple buildings in a single scene | Planned |
 | **FactoryIR Integration** | Direct pipeline to FactoryIR for rendering the generated protocols into final images | Planned |
 
----
-
-## The Story Behind Engelism
-
-Engelism wasn't born from a feature request. It was born from a frustration.
-
-When working with AI image generation for architectural visualization, every camera angle change would produce a **different building**. The materials would shift. The proportions would warp. The identity would dissolve. There was no way to say "show me this exact building, but from above" and get a consistent result.
-
-Engelism solves this by separating the **what** from the **where**. The reference image locks the building identity. The override protocol describes only the camera change. The AI receives both — and the architecture survives the angle shift.
-
-**What started as a Streamlit prototype** (Engel) became a full React 19 + TypeScript application with provider-agnostic architecture, enforced JSON schemas, cross-product batch processing, and multi-IDE support — all built through prompts, not sprints.
-
-The 6-field protocol structure wasn't designed in a meeting. It emerged from hundreds of failed generations where key information kept getting lost. Each field exists because its absence caused a specific, repeatable failure mode.
-
-> **Engelism** is a Kraftreich tool.
-> Vibe-coded from zero to production — one prompt at a time.
